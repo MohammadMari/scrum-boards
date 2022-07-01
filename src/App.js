@@ -1,5 +1,9 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Login from './Login';
+import Nav from './Nav';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
@@ -29,15 +33,12 @@ function App() {
   dbTest();
 
   return (
-    <div className='navbar'>
-      <button className='navButton'>
-        Dashboard
-      </button>
-      <button className='navButton'>
-        Board
-      </button>
-
-    </div>
+    <Router>
+      <Nav/>
+        <Routes>
+          <Route path='/login' element={<Login/>}/>
+        </Routes>
+    </Router> 
   );
 }
 
