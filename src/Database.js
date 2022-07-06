@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { child, get, getDatabase, ref, set } from 'firebase/database';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { onValue, get, getDatabase, ref, set } from 'firebase/database';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import Account from "./Account";
 
 //User account class
@@ -19,7 +19,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const bcrypt = require("bcryptjs");
+const scrum_auth = getAuth();
 
 class ScrumDatabase {
 
@@ -27,25 +27,40 @@ class ScrumDatabase {
         this.firebase_db = getDatabase(app);
     }
 
-    getAccountByID(uid) {
-        const dbRef = ref(this.firebase_db);
-        get(child(dbRef, `users/${uid}`)).then((snapshot) => {
-            if (snapshot.exists()) {
-              return new Account(snapshot);
-            } else {
-              console.log("No data available");
-            }
-          }).catch((error) => {
-            console.error(error);
-          });
-
-          return null;
+    setupAccountListener(callback) {
+        const db = getDatabase();
+        const starCountRef = ref(db, '');
+        onValue(starCountRef, (snapshot) => {
+            const data = snapshot.val();
+            callback(snapshot);
+        });
     }
 
+    getAccountByID(uid) {
+
+        get(ref(this.firebase_db, `users/${uid}`)).then((snapshot) => {
+            if (snapshot.exists()) {
+                console.log("Data found");
+                return new Account(snapshot);
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+
+        console.log(`No user found with id ${uid}`);
+        return null;
+    }
+
+
+    /* Returns current logged in user or null if not logged in
+        returns: Account object of user or null
+    */
     getCurrentUser() {
         const auth = getAuth(app);
 
-        if(auth.currentUser)
+        if (auth.currentUser)
             return this.getAccountByID(auth.currentUser.uid);
         else
             return null;
@@ -98,17 +113,9 @@ class ScrumDatabase {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+
+                console.log(errorCode + " " + errorMessage);
             });
-
-        /*get(child(this.firebase_db, 'users/' + email.replace('.', '')).then((snapshot) => {
-            if(snapshot.exists()) {
-                console.log(snapshot.val());
-                //if(bcrypt.compareSync(password, snapshot))
-            } else {
-                return false;
-            }
-        }));*/
-
     }
 
     signOutUser() {
@@ -124,4 +131,4 @@ class ScrumDatabase {
 
 const scrum_db = new ScrumDatabase();
 
-export { scrum_db };
+export { scrum_db, scrum_auth };
