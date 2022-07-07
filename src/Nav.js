@@ -3,10 +3,10 @@ import { Link } from 'react-dom';
 
 function Nav () {
     return (
-        <login>
+        //<login>
            <div className='navbar'>
             </div> 
-        </login>
+        //</login>
     );
 }
 
