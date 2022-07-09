@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { scrum_db } from './Database';
 import Login from './Login';
+import Registration from './Registration';
 import Nav from './Nav';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import Logout from './Logout';
@@ -19,6 +20,10 @@ function App() {
 
         <Routes>
           <Route path='/logout' element={<Logout />}/>
+        </Routes>
+
+        <Routes>
+          <Route path ='/Registration' element={<Registration/>}/>
         </Routes>
     </Router> 
   );

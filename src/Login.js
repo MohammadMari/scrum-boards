@@ -72,7 +72,7 @@ function Login() {
                         </input>
                     </div>
 
-                    <a href='/signup' className='smallText'> Sign Up</a>
+                    <a href='/Registration' className='smallText'> Sign Up</a>
                     <br />
                     <button className='loginButton' onClick={() => signInWithEmailAndPassword(email, password)}>
                         Login
