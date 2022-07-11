@@ -1,0 +1,26 @@
+
+.SideBar {
+    width: 300px;
+    background-color: lightblue;
+    overflow:hidden;
+    padding-bottom: 100%;
+    float:left;
+}
+
+.SideBarButton {
+    width: 50%;
+    height: 50px;
+}
+
+.SideBarButtons:hover {
+    
+}
+
+
+.taskBox {
+    background-color: lightgray;
+    width: 25%;
+    padding-bottom: 100%;
+    margin: 10px;
+    float:left;
+}
