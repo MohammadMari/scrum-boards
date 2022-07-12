@@ -18,8 +18,21 @@ function Registration() {
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
+    const [passwordCheck, setPassswordCheck] = useState('');
 
-    if (user) {
+    const handleSubmit = (e, p1, p2) => {
+        if (p1 == p2)
+            createUserWithEmailAndPassword(e, p1);
+    };
+
+    const passwordVerify = (p1, p2) => {
+        if (p1 != p2)
+            setPassswordCheck("Passwords do not match!");
+        else
+            setPassswordCheck('');
+    };
+
+    if (user && !userReg) {
         return (
             <div>
                 <p>Signed In User: {user.email}</p>
@@ -41,15 +54,15 @@ function Registration() {
                 <br />
             </div>
         );
+    } else if (userReg) {
+        scrum_db.createUser(firstName, lastName, email, userReg.user.uid);
+        return (
+            <div>
+                <p>Registered user: {userReg.user.email}</p>
+                <br />
+            </div>);
     } else {
-        if (userReg) {
-            scrum_db.createUser(firstName, lastName, email, userReg.userid);
-            return (
-                <div>
-                    <p>Registered user: {userReg.email}</p>
-                    <br />
-                </div>);
-        } else if (loadingReg) {
+        if (loadingReg) {
             return (
                 <div>
                     <p>Loading...</p>
@@ -72,11 +85,11 @@ function Registration() {
                         </div>
 
                         <div className='input'>
-                            <input type='text' name='fName' placeholder='First Name' onChange={(e) => setFirstName(e.target.value)}></input>
+                            <input type='text' name='firstName' placeholder='First Name' onChange={(e) => setFirstName(e.target.value)}></input>
                         </div>
 
                         <div className='input'>
-                            <input type='text' name='lName' placeholder='Last Name' onChange={(e) => setLastName(e.target.value)}></input>
+                            <input type='text' name='lastName' placeholder='Last Name' onChange={(e) => setLastName(e.target.value)}></input>
                         </div>
 
                         <div className='input'>
@@ -84,14 +97,16 @@ function Registration() {
                         </div>
 
                         <div className='input'>
-                            <input type='password' name='pword' placeholder='Password' onChange={(e) => setPassword(e.target.value)}></input>
+                            <input type='password' name='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
 
                         <div className='input'>
-                            <input type='password' name='pwordCheck' placeholder='Re-Enter Password' onChange={(e) => setPassword2(e.target.value)}></input>
+                            <input type='password' name='passwordVerify' placeholder='Re-Enter Password' onChange={(e) => { setPassword2(e.target.value); passwordVerify(password, e.target.value); }}></input>
+                            <p>{passwordCheck}</p>
+                            <br />
                         </div>
 
-                        <button className='registerButton' onClick={() => createUserWithEmailAndPassword(email, password)}>
+                        <button className='registerButton' type='button' onClick={() => { handleSubmit(email, password, password2) }}>
                             Register
                         </button>
                     </form>

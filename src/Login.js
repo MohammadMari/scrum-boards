@@ -74,7 +74,7 @@ function Login() {
 
                     <a href='/Registration' className='smallText'> Sign Up</a>
                     <br />
-                    <button className='loginButton' onClick={() => signInWithEmailAndPassword(email, password)}>
+                    <button className='loginButton' type='button' onClick={() => signInWithEmailAndPassword(email, password)}>
                         Login
                     </button>
                 </form>
