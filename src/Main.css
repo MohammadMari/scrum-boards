@@ -26,6 +26,7 @@
     margin-top: 20px;
     display: inline-block;
     position: relative;
+    text-align: center;
 }
 
 .taskParent {

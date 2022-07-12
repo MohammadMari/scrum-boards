@@ -59,6 +59,7 @@ function Login() {
 
         return (
             <div className='loginMain'>
+                <img class ='logo' src='./scrum_logo.png'/>
                 <form className='loginForm'>
                     <div className='loginHeader'>
                         Login
