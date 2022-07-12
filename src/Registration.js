@@ -72,23 +72,23 @@ function Registration() {
                         </div>
 
                         <div className='input'>
-                            <input type='text' name='user' placeholder='First Name' onChange={(e) => setFirstName(e.target.value)}></input>
+                            <input type='text' name='fName' placeholder='First Name' onChange={(e) => setFirstName(e.target.value)}></input>
                         </div>
 
                         <div className='input'>
-                            <input type='text' name='user' placeholder='Last Name' onChange={(e) => setLastName(e.target.value)}></input>
+                            <input type='text' name='lName' placeholder='Last Name' onChange={(e) => setLastName(e.target.value)}></input>
                         </div>
 
                         <div className='input'>
-                            <input type='text' name='user' placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
+                            <input type='text' name='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
                         </div>
 
                         <div className='input'>
-                            <input type='text' name='user' placeholder='Password' onChange={(e) => setPassword(e.target.value)}></input>
+                            <input type='text' name='pword' placeholder='Password' onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
 
                         <div className='input'>
-                            <input type='text' name='user' placeholder='Re-Enter Password' onChange={(e) => setPassword2(e.target.value)}></input>
+                            <input type='text' name='pwordCheck' placeholder='Re-Enter Password' onChange={(e) => setPassword2(e.target.value)}></input>
                         </div>
 
                         <button className='registerButton' onClick={() => createUserWithEmailAndPassword(email, password)}>

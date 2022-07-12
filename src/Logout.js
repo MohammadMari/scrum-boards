@@ -4,6 +4,10 @@ import { scrum_auth, scrum_app } from './Database'
 
 let wasSignedOut = false;
 
+function redirectFunc() {
+  window.location.href = "/";
+}
+
 function Logout() {
 
   const [user, loading, error] = useAuthState(scrum_auth);
@@ -14,6 +18,7 @@ function Logout() {
     console.log("Signed out");
     wasSignedOut = true;
   } else if (wasSignedOut) {
+    redirectFunc();
     return (
       <div>
         <p>Logged out....</p>
@@ -26,11 +31,12 @@ function Logout() {
       </div>
     );
   } else {
+    redirectFunc();
     return (
       <div>
         <p>You are not logged in...</p>
       </div>
-    );
+    );    
   }
 }
 

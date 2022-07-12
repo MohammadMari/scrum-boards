@@ -1,9 +1,10 @@
 
 .SideBar {
-    width: 300px;
+    width: 15%;
     background-color: lightblue;
     overflow:hidden;
     padding-bottom: 100%;
+    margin-right: 10px;
     float:left;
 }
 
@@ -19,8 +20,14 @@
 
 .taskBox {
     background-color: lightgray;
-    width: 25%;
+    width: 27%;
     padding-bottom: 100%;
     margin: 10px;
-    float:left;
+    margin-top: 20px;
+    display: inline-block;
+    position: relative;
+}
+
+.taskParent {
+    white-space: nowrap;
 }
