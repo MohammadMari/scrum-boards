@@ -27,6 +27,13 @@ class ScrumDatabase {
         this.firebase_db = getDatabase(scrum_app);
     }
 
+    createUser(firstName, lastName, email, userId) {
+        set(ref(this.firebase_db, 'users/' + userId), {
+          first_name: firstName,
+          last_name: lastName,
+          email: email
+        });
+    }
 };
 
 const scrum_db = new ScrumDatabase();
