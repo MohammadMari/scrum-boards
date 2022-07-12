@@ -2,8 +2,6 @@ import './Register.css';
 
 function Registration(){
     return(
-
-
         <div className='registerMain'>
             <form className='registerForm'>
                 <div className='registerHeader'>
@@ -11,26 +9,24 @@ function Registration(){
                 </div>
 
                 <div className='input'>
-                    <input type='text' name='user' placeholder='First Name'></input>
+                    <input type='text' name='fName' placeholder='First Name'></input>
                 </div>
 
                 <div className='input'>
-                    <input type='text' name='user' placeholder='Last Name'></input>
+                    <input type='text' name='lName' placeholder='Last Name'></input>
                 </div>
 
                 <div className='input'>
-                    <input type='text' name='user' placeholder='Email'></input>
+                    <input type='text' name='email' placeholder='Email'></input>
                 </div>
 
                 <div className='input'>
-                    <input type='text' name='user' placeholder='Password'></input>
+                    <input type='password' name='pword' placeholder='Password'></input>
                 </div>
 
                 <div className='input'>
-                    <input type='text' name='user' placeholder='Re-Enter Password'></input>
+                    <input type='password' name='pwordCheck' placeholder='Re-Enter Password'></input>
                 </div>
-
-
                 <button className='registerButton'>
                     Register
                 </button>

@@ -8,16 +8,18 @@ function Main () {
                 <button className='SideBarButton'> Tasks </button>
             </div>
 
-            <div className='taskBox'>
-                TODO
-            </div>
+            <div className='taskParent'>
+                <div className='taskBox'>
+                    TODO
+                </div>
 
-            <div className='taskBox'> 
-                WIP
-            </div>
+                <div className='taskBox'> 
+                    WIP
+                </div>
 
-            <div className='taskBox'> 
-                DONE
+                <div className='taskBox'> 
+                    DONE
+                </div>
             </div>
         </div>
     );
