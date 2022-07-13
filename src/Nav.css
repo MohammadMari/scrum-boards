@@ -1,22 +1,23 @@
 .navbar {
-    background-color: #56D2F1;
+    background-color: #5C87e6;
     color:white;
     padding: 30px;
+    display: flex;
+    justify-content: right;
 }
 
+
 .navButton {
-    background-color: #48eccc;
-    outline: black;
-    color:black;
+    background-color: #69C7E9;
+    color:white;
     display: inline-block;
     padding: 10px 40px;
-    border-radius: 5px;
+    border-radius: 20px;
     margin-left: 20px;
     transition-duration: 200ms;
-    
 }
 
 .navButton:hover {
-    background-color: #d1f3ec;
+    background-color: #9BE7FE;
     transition-duration: 200ms;
 }

@@ -1,25 +1,43 @@
 
 .SideBar {
     width: 15%;
-    background-color: lightblue;
+    background-color: #536473;
     overflow:hidden;
     padding-bottom: 100%;
     margin-right: 10px;
     float:left;
+    padding-right: 2px;
 }
 
 .SideBarButton {
-    width: 50%;
+    width: 48%;
     height: 50px;
+    background-color: #536473;
+    border-style: none;
+    color: white;
+    transition-duration: 200ms;
+    border: 1px solid black;
+    border-radius: 2px;
+    margin: 1%;
+    margin-top: 20px;
 }
 
-.SideBarButtons:hover {
-    
+
+.SideBarButton:hover {
+    background-color: #f0f3f8;
+    transition-duration: 200ms;
+    color: black;
 }
 
+
+.taskHeader {
+    background-color: #5C87e6;
+    color:white;
+    padding: 10px;
+}
 
 .taskBox {
-    background-color: lightgray;
+    background-color: #F0F3F8;
     width: 27%;
     padding-bottom: 100%;
     margin: 10px;

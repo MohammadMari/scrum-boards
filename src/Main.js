@@ -1,4 +1,12 @@
 import './Main.css';
+import React, { useState } from 'react';
+
+
+class Task extends React.Component {
+   
+}
+
+
 
 function Main () {
     return (
@@ -7,18 +15,22 @@ function Main () {
                 <button className='SideBarButton'> Boards </button>
                 <button className='SideBarButton'> Tasks </button>
             </div>
-
             <div className='taskParent'>
                 <div className='taskBox'>
-                    TODO
+                    <div className='taskHeader'>
+                        TODO
+                    </div>
+                </div>
+                <div className='taskBox'> 
+                    <div className='taskHeader'>
+                        WIP
+                    </div>
                 </div>
 
                 <div className='taskBox'> 
-                    WIP
-                </div>
-
-                <div className='taskBox'> 
-                    DONE
+                    <div className='taskHeader'>
+                        DONE
+                    </div>
                 </div>
             </div>
         </div>
