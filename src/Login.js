@@ -1,7 +1,6 @@
 import './Login.css';
 import { useSignInWithEmailAndPassword, useAuthState } from 'react-firebase-hooks/auth'
 import { scrum_auth } from './Database'
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 
 function Login() {
@@ -59,7 +58,6 @@ function Login() {
 
         return (
             <div className='loginMain'>
-                <img class ='logo' src='./scrum_logo.png'/>
                 <form className='loginForm'>
                     <div className='loginHeader'>
                         Login

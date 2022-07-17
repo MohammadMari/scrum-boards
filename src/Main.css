@@ -1,26 +1,5 @@
 
-.SideBar {
-    width: 15%;
-    background-color: #536473;
-    overflow:hidden;
-    padding-bottom: 100%;
-    margin-right: 10px;
-    float:left;
-    padding-right: 2px;
-}
 
-.SideBarButton {
-    width: 48%;
-    height: 50px;
-    background-color: #536473;
-    border-style: none;
-    color: white;
-    transition-duration: 200ms;
-    border: 1px solid black;
-    border-radius: 2px;
-    margin: 1%;
-    margin-top: 20px;
-}
 
 
 .SideBarButton:hover {
@@ -38,7 +17,7 @@
 
 .taskBox {
     background-color: #F0F3F8;
-    width: 27%;
+    width: 32%;
     padding-bottom: 100%;
     margin: 10px;
     margin-top: 20px;

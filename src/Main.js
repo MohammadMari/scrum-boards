@@ -11,10 +11,6 @@ class Task extends React.Component {
 function Main () {
     return (
         <div>
-            <div className='SideBar'>
-                <button className='SideBarButton'> Boards </button>
-                <button className='SideBarButton'> Tasks </button>
-            </div>
             <div className='taskParent'>
                 <div className='taskBox'>
                     <div className='taskHeader'>

@@ -7,6 +7,14 @@ function logoutNav() {
     window.location.href = "/logout";
 }
 
+function boardNav() {
+    window.location.href = "/boards";
+}
+
+function tasksNav() {
+    window.location.href = "/tasks";
+}
+
 function Nav () {
 
     const [user, loading, error] = useAuthState(scrum_auth);
@@ -15,14 +23,25 @@ function Nav () {
     if (user)
     {
         return (
-           <div className='navbar'>
-                <div className='navButton' onClick={() => logoutNav() }> Logout </div>
-            </div> 
+            <div className='navbar'>
+                <img class ='navbarLogo' src='./scrum_logo.png'/>
+                <div className='navbarLeft'>
+                    <div className='navButton' onClick={() => boardNav() }> Boards </div>
+                    <div className='navButton' onClick={() => tasksNav() }> Tasks </div>
+                </div> 
+                <div className='navbarRight'>
+                    <div className='navButton' onClick={() => logoutNav() }> Logout </div>
+                </div> 
+            </div>
+           
         );
     }
     else {
         return (
             <div className='navbar'>
+                <div className='navbarMid'>
+                    <img class ='logo' src='./scrum_logo.png'/>
+                </div>
              </div> 
          );
     }
