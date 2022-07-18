@@ -15,7 +15,7 @@ class Task {
         return (
             <div className='taskInfo'>
                 {this.name}
-            </div>
+            </button>
         )
     };
 
@@ -33,39 +33,45 @@ function Tasks(props) {
     };
 
 
-    const user = this.props.user;
-    const [snapshot, loading, error] = useList(scrum_db.getReference(`users/${user.uid}`));
+    const user = props.user;
+    const boardID = user.tables[0];
+    const [snapshot, loading, error] = useList(scrum_db.getReference(`tables/${boardID}`));
 
+    if (snapshot) {
 
-    return (
-        <div>
-            <button onClick={createTask}> hi</button>
-            <div className='taskParent'>
-                <div className='taskBox'>
-                    <div className='taskHeader'>
-                        TODO
-                    </div>
-                    <ul>{todoTask.map(task => <li className='list'> {task.render()}</li>)} </ul>
-                </div>
+        const tasks = snapshot.map( (v) => {return v.val()});
+       // console.log(tasks);
 
-                <div className='taskBox'>
-                    <div className='taskHeader'>
-                        WIP
-                    </div>
-                    <ul>{wipTask.map(task => <li key={task}> {task.name}</li>)} </ul>
-                </div>
-
-                <div className='taskBox'>
-                    <div className='taskHeader'>
-                        DONE
+        return (
+            <div>
+                <button onClick={createTask}> hi</button>
+                <div className='taskParent'>
+                    <div className='taskContainer'>
+                        <div className='taskHeader'>
+                            TODO
+                        </div>
+                        <ul className='taskList'>{todoTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
                     </div>
 
-                    <ul>{doneTask.map(task => <li key={task}> {task}</li>)} </ul>
+                    <div className='taskContainer'>
+                        <div className='taskHeader'>
+                            WIP
+                        </div>
+                        <ul className='taskList'>{wipTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
+                    </div>
+
+                    <div className='taskContainer'>
+                        <div className='taskHeader'>
+                            DONE
+                        </div>
+
+                        <ul className='taskList'>{doneTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    );
+        );
+    }
 
 }
 
