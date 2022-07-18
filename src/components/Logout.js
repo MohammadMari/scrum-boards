@@ -1,6 +1,6 @@
 import { signOut } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { scrum_auth, scrum_app } from './Database'
+import { scrum_auth, scrum_app } from '../Database'
 
 let wasSignedOut = false;
 

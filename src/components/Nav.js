@@ -1,7 +1,7 @@
 import './Nav.css';
 import { Link } from 'react-dom';
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { scrum_auth, scrum_app } from './Database'
+import { scrum_auth, scrum_app } from '../Database'
 
 function logoutNav() {
     window.location.href = "/logout";

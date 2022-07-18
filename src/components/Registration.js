@@ -1,6 +1,6 @@
 import './Register.css';
 import { useAuthState, useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
-import { scrum_auth, scrum_db } from './Database'
+import { scrum_auth, scrum_db } from '../Database'
 import { useState } from 'react';
 
 function Registration() {

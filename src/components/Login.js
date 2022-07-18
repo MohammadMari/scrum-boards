@@ -1,6 +1,6 @@
 import './Login.css';
 import { useSignInWithEmailAndPassword, useAuthState } from 'react-firebase-hooks/auth'
-import { scrum_auth } from './Database'
+import { scrum_auth } from '../Database'
 import { useState } from 'react';
 
 function Login() {

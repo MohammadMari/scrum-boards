@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './App.css';
-import Nav from './Nav';
-import Main from './Main';
-import Login from './Login';
-import Logout from './Logout';
-import Registration from './Registration';
+import Nav from './components/Nav';
+import Main from './components/Main';
+import Login from './components/Login';
+import Logout from './components/Logout';
+import Registration from './components/Registration';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { scrum_auth } from './Database'
