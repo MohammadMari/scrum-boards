@@ -34,6 +34,10 @@ class ScrumDatabase {
           email: email
         });
     }
+
+    getReference(key) {
+        return ref(this.firebase_db, key);
+    }
 };
 
 const scrum_db = new ScrumDatabase();

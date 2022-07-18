@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Nav from './components/Nav';
 import Main from './components/Main';
+import Tasks from './components/Task';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Registration from './components/Registration';
@@ -18,7 +19,7 @@ function App() {
       <Router>
         <Nav />
         <Routes>
-          <Route path='' element={<Main />} />
+          <Route path='' element={<Tasks user={user}/>} />
         </Routes>
         <Routes>
           <Route path='/logout' element={<Logout />} />
