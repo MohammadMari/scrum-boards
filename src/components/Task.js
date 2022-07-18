@@ -4,18 +4,24 @@ import { scrum_db } from '../Database';
 import './Task.css'
 
 class Task {
-    constructor(name, desc, due, id) {
-        this.name = name;
-        this.desc = desc;
-        this.due = due;
-        this.id = id;
+
+    constructor(key, val) {
+        this.name = val.name;
+        this.desc = val.description;
+        this.due = val.due;
+        this.type = val.type;
+        this.id = key;
     }
+
+
 
     render() {
         return (
-            <div className='taskInfo'>
-                {this.name}
-            </button>
+            <li key={this.id} className='taskBox'>
+                <button className='taskButton' onClick={this.displayInfo}>
+                    {this.name}
+                </button>
+            </li>
         )
     };
 
@@ -23,25 +29,18 @@ class Task {
 
 
 function Tasks(props) {
-
-    const [todoTask, setTodoTask] = useState([new Task('woa', 'weee', '10/10/22'), new Task('woooooo', 'weee', '10/10/22')]);
-    const [wipTask, setWipTask] = useState([]);
-    const [doneTask, setDoneTask] = useState([]);
-
     const createTask = () => {
-        setTodoTask(todoTask.concat(new Task('wa', 'wa', 'wa')));
+
     };
 
 
     const user = props.user;
     const boardID = user.tables[0];
-    const [snapshot, loading, error] = useList(scrum_db.getReference(`tables/${boardID}`));
+    const [snapshot, loading, error] = useList(scrum_db.getReference(`tables/table1`));
 
     if (snapshot) {
-
-        const tasks = snapshot.map( (v) => {return v.val()});
-       // console.log(tasks);
-
+        const tasks = snapshot.map((v) => { return new Task(v.key, v.val()) });
+        
         return (
             <div>
                 <button onClick={createTask}> hi</button>
@@ -50,25 +49,25 @@ function Tasks(props) {
                         <div className='taskHeader'>
                             TODO
                         </div>
-                        <ul className='taskList'>{todoTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
+                        <ul className='taskList'>{tasks.filter((v) => { return v.type === 0 }).map(task => { return task.render() })} </ul>
+                </div>
+
+                <div className='taskContainer'>
+                    <div className='taskHeader'>
+                        WIP
+                    </div>
+                    <ul className='taskList'>{tasks.filter((v) => { return v.type === 1 }).map(task => {return task.render()})} </ul>
+                </div>
+
+                <div className='taskContainer'>
+                    <div className='taskHeader'>
+                        DONE
                     </div>
 
-                    <div className='taskContainer'>
-                        <div className='taskHeader'>
-                            WIP
-                        </div>
-                        <ul className='taskList'>{wipTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
-                    </div>
-
-                    <div className='taskContainer'>
-                        <div className='taskHeader'>
-                            DONE
-                        </div>
-
-                        <ul className='taskList'>{doneTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
-                    </div>
+                    <ul className='taskList'>{tasks.filter((v) => { return v.type === 2 }).map(task => {return task.render()})} </ul>
                 </div>
             </div>
+            </div >
 
         );
     }

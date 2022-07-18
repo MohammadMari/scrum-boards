@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
 import Nav from './components/Nav';
-import Main from './components/Main';
 import Tasks from './components/Task';
 import Login from './components/Login';
 import Logout from './components/Logout';
@@ -26,7 +25,7 @@ function App() {
       <Router>
         <Nav />
         <Routes>
-          <Route path='/' element={<Tasks user={new Account(snapshot, user.uid)}/>} />
+          <Route path='/' element={<Tasks user={new Account(snapshot, user.uid)} />} />
         </Routes>
         <Routes>
           <Route path='/logout' element={<Logout />} />
@@ -41,7 +40,7 @@ function App() {
       <Router>
         <Nav />
         <Routes>
-          <Route path='' element={<Login />} />
+          <Route path='/' element={<Login />} />
         </Routes>
         <Routes>
           <Route path='/logout' element={<Logout />} />

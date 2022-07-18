@@ -24,7 +24,7 @@ function Nav () {
     {
         return (
             <div className='navbar'>
-                <img class ='navbarLogo' src='./scrum_logo.png'/>
+                <img className='navbarLogo' src='./scrum_logo.png'/>
                 <div className='navbarLeft'>
                     <div className='navButton' onClick={() => boardNav() }> Boards </div>
                     <div className='navButton' onClick={() => tasksNav() }> Tasks </div>
@@ -40,7 +40,7 @@ function Nav () {
         return (
             <div className='navbar'>
                 <div className='navbarMid'>
-                    <img class ='logo' src='./scrum_logo.png'/>
+                    <img className='logo' src='./scrum_logo.png'/>
                 </div>
              </div> 
          );
