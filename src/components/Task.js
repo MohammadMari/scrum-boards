@@ -34,25 +34,25 @@ function Tasks(props) {
     };
 
 
-    const user = this.props.user;
-    const [snapshot, loading, error] = useList(scrum_db.getReference(`users/${user.uid}`));
+    //const user = this.props.user;
+    //const [snapshot, loading, error] = useList(scrum_db.getReference(`users/${user.uid}`));
 
         return ( 
         <div>
-            <button onClick={this.createTask}> hi</button>
+            <button onClick={createTask}> hi</button>
             <div className='taskParent'>
                 <div className='taskContainer'>
                     <div className='taskHeader'>
                         TODO
                     </div>
-                    <ul className='taskList'>{this.state.todoTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
+                    <ul className='taskList'>{todoTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
                 </div>
 
                 <div className='taskContainer'> 
                     <div className='taskHeader'>
                         WIP
                     </div>
-                    <ul className='taskList'>{this.state.wipTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
+                    <ul className='taskList'>{wipTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
                 </div>
 
                 <div className='taskContainer'> 
@@ -60,7 +60,7 @@ function Tasks(props) {
                         DONE
                     </div>
 
-                    <ul className='taskList'>{this.state.doneTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
+                    <ul className='taskList'>{doneTask.map(task => <li className='taskBox'> {task.render()}</li>)} </ul>
                 </div>
             </div>
         </div>
