@@ -39,8 +39,8 @@ function Tasks(props) {
     const [snapshot, loading, error] = useList(scrum_db.getReference(`tables/table1`));
 
     if (snapshot) {
+
         const tasks = snapshot.map((v) => { return new Task(v.key, v.val()) });
-        
         return (
             <div>
                 <button onClick={createTask}> hi</button>
