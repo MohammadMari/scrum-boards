@@ -1,10 +1,22 @@
 import React, { Component, useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { useList } from 'react-firebase-hooks/database';
 import { scrum_db } from '../Database';
 import './Task.css'
 
-class Task {
+const Column = ({taskList, name}) => {
+    return (
+            <div className='taskContainer'>
+                <div className='taskHeader'>
+                    {name}
+                </div>
+                <ul className='taskList'>{taskList.filter((v) => { return v.type === 1 }).map(task => {return task.render()})} </ul>
+            </div>
+    );
+}
 
+
+class Task {
     constructor(key, val) {
         this.name = val.name;
         this.desc = val.description;
@@ -12,8 +24,6 @@ class Task {
         this.type = val.type;
         this.id = key;
     }
-
-
 
     render() {
         return (
@@ -24,7 +34,6 @@ class Task {
             </li>
         )
     };
-
 };
 
 
@@ -33,6 +42,11 @@ function Tasks(props) {
 
     };
 
+    // const [state, setState] = useState(initialData)
+
+    const onDragEnd = (result) => {
+        const { destination, source } = result;
+    }
 
     const user = props.user;
     const boardID = user.tables[0];
@@ -42,33 +56,16 @@ function Tasks(props) {
 
         const tasks = snapshot.map((v) => { return new Task(v.key, v.val()) });
         return (
-            <div>
-                <button onClick={createTask}> hi</button>
-                <div className='taskParent'>
-                    <div className='taskContainer'>
-                        <div className='taskHeader'>
-                            TODO
-                        </div>
-                        <ul className='taskList'>{tasks.filter((v) => { return v.type === 0 }).map(task => { return task.render() })} </ul>
-                </div>
-
-                <div className='taskContainer'>
-                    <div className='taskHeader'>
-                        WIP
+            // <DragDropContext onDragEnd={onDragEnd}>
+                <div>
+                    <button onClick={createTask}> hi</button>
+                    <div className='taskParent'>
+                        <Column taskList={tasks} name='TODO'/>
+                        <Column taskList={tasks} name='WIP'/>
+                        <Column taskList={tasks} name='DONE'/>
                     </div>
-                    <ul className='taskList'>{tasks.filter((v) => { return v.type === 1 }).map(task => {return task.render()})} </ul>
                 </div>
-
-                <div className='taskContainer'>
-                    <div className='taskHeader'>
-                        DONE
-                    </div>
-
-                    <ul className='taskList'>{tasks.filter((v) => { return v.type === 2 }).map(task => {return task.render()})} </ul>
-                </div>
-            </div>
-            </div >
-
+            // </DragDropContext>
         );
     }
 
