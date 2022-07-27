@@ -28,7 +28,7 @@ const Column = ({taskList, name, type}) => {
 class Task {
     constructor(key, val) {
         this.name = val.name;
-        this.desc = val.description;
+        this.description = val.description;
         this.due = val.due;
         this.type = val.type;
         this.id = key;
@@ -47,23 +47,21 @@ class Task {
 
 
 function Tasks(props) {
-    
-    const ref = scrum_db.getReference(`tables/table1`);
 
     const user = props.user;
-    const boardID = user.tables[0];
+    const tableID = user.tables[0];
+    const ref = scrum_db.getReference(`tables/${tableID}`);
     const [snapshot, loading, error] = useList(ref);
     const [presentTodo, setPresentTodo] = useState('');
 
     
     const createTask = () => {
-        push(ref, {
+        scrum_db.createTask(tableID, {
             description:  'wa',
             due: 'poof',
             name: 'yeet',
             type: 1
-        }
-        );  
+        });
     };
 
     // const [state, setState] = useState(initialData)
@@ -76,7 +74,8 @@ function Tasks(props) {
 
 
     if (snapshot) {
-        const tasks = snapshot.map((v) => { return new Task(v.key, v.val()) });
+        var tasks = snapshot.map((v) => { return new Task(v.key, v.val()) });
+        tasks = [...new Map(tasks.map(v => [v.id, v])).values()];
         return (
              <div>
                 <div>
@@ -87,12 +86,14 @@ function Tasks(props) {
                         <Column taskList={tasks} type={2} name='DONE'/>
                     </div>
                 </div>
-                <Popup trigger="true">
-                    hello
-                </Popup>
+                
              </div>
         );
     }
+
+    /*<Popup trigger="true">
+                    hello
+                </Popup>*/
 
 }
 

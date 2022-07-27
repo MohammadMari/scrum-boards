@@ -40,18 +40,21 @@ class ScrumDatabase {
         return ref(this.firebase_db, key);
     }
 
-    createBoard(userid, board_name) {
-        const board_ref = push(ref(this.firebase_db, `tables/`), {
-            board_name: board_name,
-            tasks: [ {
-                description: 'Sample',
-                due: 0,
-                name: 'Sample',
-                type: 0
-                } ]
+    createTable(userid, board_name) {
+        const tableRef = push(ref(this.firebase_db, `tables/`), {
+            table_name: board_name
           });
 
-        push(ref(this.firebase_db, `users/${userid}/tables`), board_ref.key);
+        push(ref(this.firebase_db, `users/${userid}/tables`), tableRef.key);
+    }
+
+    createTask(table_id, task) {
+       const taskRef = push(ref(this.firebase_db, `tables/${table_id}`), {
+            name: task.name,
+            description: task.description,
+            due: task.due,
+            type: task.type
+       });
     }
 };
 
