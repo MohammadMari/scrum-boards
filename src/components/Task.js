@@ -4,13 +4,21 @@ import { useList } from 'react-firebase-hooks/database';
 import { scrum_db } from '../Database';
 import './Task.css'
 
-const Column = ({taskList, name}) => {
+import {
+    ref,
+    onValue,
+    push,
+    update,
+    remove
+} from 'firebase/database';
+
+const Column = ({taskList, name, type}) => {
     return (
             <div className='taskContainer'>
                 <div className='taskHeader'>
                     {name}
                 </div>
-                <ul className='taskList'>{taskList.filter((v) => { return v.type === 1 }).map(task => {return task.render()})} </ul>
+                <ul className='taskList'>{taskList.filter((v) => { return v.type === type }).map(task => {return task.render()})} </ul>
             </div>
     );
 }
@@ -38,8 +46,23 @@ class Task {
 
 
 function Tasks(props) {
-    const createTask = () => {
+    
+    const ref = scrum_db.getReference(`tables/table1`);
 
+    const user = props.user;
+    const boardID = user.tables[0];
+    const [snapshot, loading, error] = useList(ref);
+    const [presentTodo, setPresentTodo] = useState('');
+
+    
+    const createTask = () => {
+        push(ref, {
+            description:  'wa',
+            due: 'poof',
+            name: 'yeet',
+            type: 1
+        }
+        );  
     };
 
     // const [state, setState] = useState(initialData)
@@ -48,21 +71,19 @@ function Tasks(props) {
         const { destination, source } = result;
     }
 
-    const user = props.user;
-    const boardID = user.tables[0];
-    const [snapshot, loading, error] = useList(scrum_db.getReference(`tables/table1`));
+    
+
 
     if (snapshot) {
-
         const tasks = snapshot.map((v) => { return new Task(v.key, v.val()) });
         return (
             // <DragDropContext onDragEnd={onDragEnd}>
                 <div>
                     <button onClick={createTask}> hi</button>
                     <div className='taskParent'>
-                        <Column taskList={tasks} name='TODO'/>
-                        <Column taskList={tasks} name='WIP'/>
-                        <Column taskList={tasks} name='DONE'/>
+                        <Column taskList={tasks} name='TODO' type={0}/>
+                        <Column taskList={tasks} name='WIP' type={1}/>
+                        <Column taskList={tasks} name='DONE' type={2}/>
                     </div>
                 </div>
             // </DragDropContext>

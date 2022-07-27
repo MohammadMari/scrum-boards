@@ -5,6 +5,7 @@ import Tasks from './components/Task';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Registration from './components/Registration';
+import Boards from './components/Boards';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { scrum_auth, scrum_db } from './Database'
@@ -16,10 +17,10 @@ function App() {
   const [user, loading, error] = useAuthState(scrum_auth);
   //console.log(user);
   const [snapshot, loading_db, error_db] = useListVals(user ? scrum_db.getReference(`users/${user.uid}`) : null);
-  console.log(snapshot);
+  //console.log(snapshot);
 
   if (user && snapshot && !loading_db) {
-    console.log(new Account(snapshot, user.uid));
+    //console.log(new Account(snapshot, user.uid));
 
     return (
       <Router>
@@ -32,6 +33,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path='/registration' element={<Registration />} />
+        </Routes>
+        <Routes>
+          <Route path='/boards' element={<Boards user={new Account(snapshot, user.uid)} />} />
         </Routes>
       </Router>
     );
