@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useList } from 'react-firebase-hooks/database';
 import { scrum_db } from '../Database';
+import Popup from './Popup';
 import './Task.css'
 
 const Column = ({taskList, name}) => {
@@ -56,7 +57,7 @@ function Tasks(props) {
 
         const tasks = snapshot.map((v) => { return new Task(v.key, v.val()) });
         return (
-            // <DragDropContext onDragEnd={onDragEnd}>
+             <div>
                 <div>
                     <button onClick={createTask}> hi</button>
                     <div className='taskParent'>
@@ -65,7 +66,10 @@ function Tasks(props) {
                         <Column taskList={tasks} name='DONE'/>
                     </div>
                 </div>
-            // </DragDropContext>
+                <Popup trigger="true">
+                    hello
+                </Popup>
+             </div>
         );
     }
 
