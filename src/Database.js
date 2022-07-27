@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { onValue, get, getDatabase, ref, set } from 'firebase/database';
+import { onValue, get, getDatabase, ref, set, push } from 'firebase/database';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import Account from "./Account";
 
@@ -31,12 +31,27 @@ class ScrumDatabase {
         set(ref(this.firebase_db, 'users/' + userId), {
           first_name: firstName,
           last_name: lastName,
-          email: email
+          email: email,
+          tables: []
         });
     }
 
     getReference(key) {
         return ref(this.firebase_db, key);
+    }
+
+    createBoard(userid, board_name) {
+        const board_ref = push(ref(this.firebase_db, `tables/`), {
+            board_name: board_name,
+            tasks: [ {
+                description: 'Sample',
+                due: 0,
+                name: 'Sample',
+                type: 0
+                } ]
+          });
+
+        push(ref(this.firebase_db, `users/${userid}/tables`), board_ref.key);
     }
 };
 

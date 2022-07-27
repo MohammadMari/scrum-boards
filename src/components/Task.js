@@ -4,13 +4,13 @@ import { useList } from 'react-firebase-hooks/database';
 import { scrum_db } from '../Database';
 import './Task.css'
 
-const Column = ({taskList, name}) => {
+const Column = ({taskList, name, type}) => {
     return (
             <div className='taskContainer'>
                 <div className='taskHeader'>
                     {name}
                 </div>
-                <ul className='taskList'>{taskList.filter((v) => { return v.type === 1 }).map(task => {return task.render()})} </ul>
+                <ul className='taskList'>{taskList.filter((v) => { return v.type === type }).map(task => {return task.render()})} </ul>
             </div>
     );
 }
@@ -60,9 +60,9 @@ function Tasks(props) {
                 <div>
                     <button onClick={createTask}> hi</button>
                     <div className='taskParent'>
-                        <Column taskList={tasks} name='TODO'/>
-                        <Column taskList={tasks} name='WIP'/>
-                        <Column taskList={tasks} name='DONE'/>
+                        <Column taskList={tasks} type={0} name='TODO'/>
+                        <Column taskList={tasks} type={1} name='WIP'/>
+                        <Column taskList={tasks} type={2} name='DONE'/>
                     </div>
                 </div>
             // </DragDropContext>

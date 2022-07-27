@@ -56,6 +56,7 @@ function Registration() {
         );
     } else if (userReg) {
         scrum_db.createUser(firstName, lastName, email, userReg.user.uid);
+        scrum_db.createBoard(userReg.user.uid, "test_board");
         return (
             <div>
                 <p>Registered user: {userReg.user.email}</p>
