@@ -4,6 +4,7 @@ import { scrum_auth } from '../Database'
 import { useState } from 'react';
 
 function Login() {
+    let errorState = "test";
 
     const [user, loading, error] = useAuthState(scrum_auth);
     const [email, setEmail] = useState('');
@@ -56,6 +57,16 @@ function Login() {
             );
         }
 
+        function signIn(email, password) {
+            if (email != "" && password != "") {
+                signInWithEmailAndPassword(email, password);
+            }
+            else {
+                let errorState = "please enter valid password and email";
+                console.log("here");
+            }
+        }
+
         return (
             <div className='loginMain'>
                 <form className='loginForm'>
@@ -73,7 +84,9 @@ function Login() {
 
                     <a href='/Registration' className='smallText'> Sign Up</a>
                     <br />
-                    <button className='loginButton' type='button' onClick={() => signInWithEmailAndPassword(email, password)}>
+
+                    <div className='error'>{errorState}</div>
+                    <button className='loginButton' type='button' onClick={() => signIn(email, password)}>
                         Login
                     </button>
                 </form>
