@@ -19,26 +19,37 @@ function App() {
   const [snapshot, loading_db, error_db] = useListVals(user ? scrum_db.getReference(`users/${user.uid}`) : null);
   //console.log(snapshot);
 
-  if (user && snapshot && !loading_db) {
-    //console.log(new Account(snapshot, user.uid));
+  const url = window.location.href;
+  const lastSegment = url.split("/").pop();
+  console.log(lastSegment);
 
-    return (
-      <Router>
-        <Nav />
-        <Routes>
-          <Route path='/' element={<Tasks user={new Account(snapshot, user.uid)}/>} />
-        </Routes>
-        <Routes>
-          <Route path='/logout' element={<Logout />} />
-        </Routes>
-        <Routes>
-          <Route path='/registration' element={<Registration />} />
-        </Routes>
-        <Routes>
-          <Route path='/boards' element={<Boards user={new Account(snapshot, user.uid)} />} />
-        </Routes>
-      </Router>
-    );
+  if (user && snapshot && !loading_db) {
+    //checking to see if there is a board ID at the end of URL
+    if (lastSegment == "logout" || lastSegment == "registration" || !lastSegment.length || lastSegment == "tasks")
+    {
+      return (
+        <Router>
+          <Nav />
+          <Routes>
+            <Route path='/logout' element={<Logout />} />
+          </Routes>
+          <Routes>
+            <Route path='/registration' element={<Registration />} />
+          </Routes>
+          <Routes>
+            <Route path='/' element={<Boards user={new Account(snapshot, user.uid, )} />} />
+          </Routes>
+        </Router>
+      );
+    }
+    else {
+       return (
+        <Router>
+          <Nav />
+            <Tasks user={new Account(snapshot, user.uid)}/>
+        </Router>
+      );
+    }
   } else {
     return (
       <Router>

@@ -22,10 +22,14 @@ class tableTile {
         this.id = key;
     }
 
+    redirect() {
+        window.location.href = "/boards/" + this.id;
+    }
+
     render() {
         return (
             <li key={this.id} className='taskBox'>
-                <button className='taskButton' onClick={this.displayInfo}>
+                <button className='taskButton' onClick={() => this.redirect() }>
                     {this.tableName}
                 </button>
             </li>
@@ -34,13 +38,15 @@ class tableTile {
 };
 
 
-
-
 function Boards(props) {
 
 
     const [snapshot, loading, error] = useList(scrum_db.getReference('tables'));
     const user = props.user;
+
+    const url = window.location.href;
+    const lastSegment = url.split("/").pop();
+    
 
 
     const createTable = () => {
@@ -49,7 +55,7 @@ function Boards(props) {
 
     if (snapshot) {
         console.log(snapshot);
-        var tables = snapshot.map((v) => { return new tableTile(v.key, v.val()) }).filter(v => { return user.tables.includes(v.id) });
+        var tables = snapshot.map((v) => { return new tableTile(v.key, v.val(), props) }).filter(v => { return user.tables.includes(v.id) });
         tables = [...new Map(tables.map(v => [v.id, v])).values()];
 
         return (

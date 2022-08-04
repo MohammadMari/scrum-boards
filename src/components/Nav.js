@@ -8,7 +8,7 @@ function logoutNav() {
 }
 
 function boardNav() {
-    window.location.href = "/boards";
+    window.location.href = "/";
 }
 
 function tasksNav() {

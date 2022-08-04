@@ -48,9 +48,11 @@ class Task {
 
 function Tasks(props) {
 
+    const url = window.location.href;
+     const lastSegment = url.split("/").pop();
     const user = props.user;
-    const tableID = user.tables[0];
-    const ref = scrum_db.getReference(`tables/${tableID}`);
+    const tableID = lastSegment;
+    const ref = scrum_db.getReference(`tables/${lastSegment}`);
     const [snapshot, loading, error] = useList(ref);
     const [presentTodo, setPresentTodo] = useState('');
 
