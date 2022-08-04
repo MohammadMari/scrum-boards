@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useList } from 'react-firebase-hooks/database';
+import Account from '../Account';
 import { scrum_db } from '../Database';
 import './Boards.css'
 
@@ -17,15 +18,21 @@ const Column = ({ taskList, name, type }) => {
 
 
 class tableTile {
-    constructor(key, val) {
-        this.tableName = val.table_name;
+    #id;
+    constructor(key, tableName) {
+        this.tableName = tableName;
         this.id = key;
-    }
+    };
+
+    redirect() {
+        console.log(this.id);
+    };
+    
 
     render() {
         return (
             <li key={this.id} className='taskBox'>
-                <button className='taskButton' onClick={this.displayInfo}>
+                <button className='taskButton' onClick={this.redirect}>
                     {this.tableName}
                 </button>
             </li>
@@ -49,7 +56,7 @@ function Boards(props) {
 
     if (snapshot) {
         console.log(snapshot);
-        var tables = snapshot.map((v) => { return new tableTile(v.key, v.val()) }).filter(v => { return user.tables.includes(v.id) });
+        var tables = snapshot.map((v) => { return new tableTile(v.key, v.val().tableName) }).filter(v => { return user.tables.includes(v.id) });
         tables = [...new Map(tables.map(v => [v.id, v])).values()];
 
         return (
