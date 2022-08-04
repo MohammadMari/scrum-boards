@@ -1,17 +1,7 @@
 import React, { Component, useState } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
 import { useList } from 'react-firebase-hooks/database';
 import { scrum_db } from '../Database';
-import Popup from './Popup';
 import './Task.css'
-
-import {
-    ref,
-    onValue,
-    push,
-    update,
-    remove
-} from 'firebase/database';
 
 const Column = ({taskList, name, type}) => {
     return (
