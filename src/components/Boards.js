@@ -1,7 +1,6 @@
 import React, { Component, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useList } from 'react-firebase-hooks/database';
-import Account from '../Account';
 import { scrum_db } from '../Database';
 import './Boards.css'
 
@@ -18,16 +17,10 @@ const Column = ({ taskList, name, type }) => {
 
 
 class tableTile {
-    #id;
-    constructor(key, tableName) {
-        this.tableName = tableName;
+    constructor(key, val) {
+        this.tableName = val.table_name;
         this.id = key;
-    };
-
-    redirect() {
-        console.log(this.id);
-    };
-    
+    }
 
     redirect() {
         window.location.href = "/boards/" + this.id;
@@ -43,6 +36,7 @@ class tableTile {
         )
     };
 };
+
 
 
 function Boards(props) {
