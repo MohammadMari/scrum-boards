@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/scrum-boards/static/css/main.dec3f502.css",
-    "main.js": "/scrum-boards/static/js/main.8d818b91.js",
+    "main.js": "/scrum-boards/static/js/main.107c7469.js",
     "static/js/787.7d9e3fda.chunk.js": "/scrum-boards/static/js/787.7d9e3fda.chunk.js",
     "index.html": "/scrum-boards/index.html",
     "main.dec3f502.css.map": "/scrum-boards/static/css/main.dec3f502.css.map",
-    "main.8d818b91.js.map": "/scrum-boards/static/js/main.8d818b91.js.map",
+    "main.107c7469.js.map": "/scrum-boards/static/js/main.107c7469.js.map",
     "787.7d9e3fda.chunk.js.map": "/scrum-boards/static/js/787.7d9e3fda.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dec3f502.css",
-    "static/js/main.8d818b91.js"
+    "static/js/main.107c7469.js"
   ]
 }
