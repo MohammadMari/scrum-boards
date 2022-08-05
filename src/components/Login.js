@@ -4,10 +4,10 @@ import { scrum_auth } from '../Database'
 import { useState } from 'react';
 
 function Login() {
-    let errorState = "test";
-
     const [user, loading, error] = useAuthState(scrum_auth);
     const [email, setEmail] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
         const [password, setPassword] = useState('');
         const [
             signInWithEmailAndPassword,
@@ -30,19 +30,11 @@ function Login() {
                 <p>Loading...</p>
             </div>
         );
-    } else if (error) {
-        return (
-            <div>
-                <p>Error: {error.message}</p>
-            </div>
-        );
+    } else if (error && !errorMessage.length) {
+        setErrorMessage("wa"); 
     } else {
-        if (error_signin) {
-            return (
-                <div>
-                    <p>Error: {error.message}</p>
-                </div>
-            );
+        if (error_signin && !errorMessage.length) {
+            setErrorMessage("Please enter correct email or password!");
         } if (user_signin) {
             return (
                 <div>
@@ -62,8 +54,8 @@ function Login() {
                 signInWithEmailAndPassword(email, password);
             }
             else {
-                let errorState = "please enter valid password and email";
-                console.log("here");
+                var errorElement = document.getElementById('error');
+                errorElement.innerHTML = "Please enter valid username and password";
             }
         }
 
@@ -85,7 +77,7 @@ function Login() {
                     <a href='/Registration' className='smallText'> Sign Up</a>
                     <br />
 
-                    <div className='error'>{errorState}</div>
+                    <div className='error'> {errorMessage}</div>
                     <button className='loginButton' type='button' onClick={() => signIn(email, password)}>
                         Login
                     </button>
