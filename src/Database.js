@@ -50,7 +50,7 @@ class ScrumDatabase {
 
     deleteTable(user, table_id) {
         remove(ref(this.firebase_db, `tables/${table_id}`));
-        set(ref(this.firebase_db, `users/${user.uid}` + userId), {
+        set(ref(this.firebase_db, `users/${user.uid}` + user), {
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
