@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { useList } from 'react-firebase-hooks/database';
 import { scrum_db } from '../Database';
 import './Task.css'
+import Popup from './Popup';
 
 const Column = ({taskList, name, type}) => {
     return (
@@ -62,6 +63,7 @@ function Tasks(props) {
         const { destination, source } = result;
     }
 
+    const [popupButton, setPopupButton] = useState(false);
     
 
 
@@ -72,20 +74,20 @@ function Tasks(props) {
              <div>
                 <div>
                     <button onClick={createTask}> hi</button>
+                    <button onClick={() => setPopupButton(true)}>Create New Task</button>
                     <div className='taskParent'>
                         <Column taskList={tasks} type={0} name='TODO'/>
                         <Column taskList={tasks} type={1} name='WIP'/>
                         <Column taskList={tasks} type={2} name='DONE'/>
                     </div>
                 </div>
-                
+                <Popup trigger={popupButton} setTrigger={setPopupButton}>
+
+                </Popup>
+
              </div>
         );
     }
-
-    /*<Popup trigger="true">
-                    hello
-                </Popup>*/
 
 }
 
