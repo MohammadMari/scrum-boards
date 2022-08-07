@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { onValue, get, getDatabase, ref, set, push } from 'firebase/database';
+import { onValue, get, getDatabase, ref, set, push, remove } from 'firebase/database';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import Account from "./Account";
 
@@ -29,10 +29,10 @@ class ScrumDatabase {
 
     createUser(firstName, lastName, email, userId) {
         set(ref(this.firebase_db, 'users/' + userId), {
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          tables: []
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            tables: []
         });
     }
 
@@ -43,18 +43,43 @@ class ScrumDatabase {
     createTable(userid, board_name) {
         const tableRef = push(ref(this.firebase_db, `tables/`), {
             table_name: board_name
-          });
+        });
 
         push(ref(this.firebase_db, `users/${userid}/tables`), tableRef.key);
     }
 
+    deleteTable(user, table_id) {
+        remove(ref(this.firebase_db, `tables/${table_id}`));
+        set(ref(this.firebase_db, `users/${user.uid}` + userId), {
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            tables: user.tables.filter(v => {
+                return v != table_id;
+            })
+        });
+    }
+
     createTask(table_id, task) {
-       const taskRef = push(ref(this.firebase_db, `tables/${table_id}`), {
+        push(ref(this.firebase_db, `tables/${table_id}`), {
             name: task.name,
             description: task.description,
             due: task.due,
             type: task.type
-       });
+        });
+    }
+
+    deleteTask(table_id, task) {
+        remove(ref(this.firebase_db, `tables/${table_id}/${task.id}`));
+    }
+
+    editTask(table_id, task) {
+        set(ref(this.firebase_db, `tables/${table_id}/${task.id}`), {
+            name: task.name,
+            description: task.description,
+            due: task.due,
+            type: task.type
+        });
     }
 };
 
