@@ -17,8 +17,8 @@ class tableTile {
 
     render() {
         return (
-            <li key={this.id} className='taskBox'>
-                <button className='taskButton' onClick={() => this.redirect() }>
+            <li key={this.id} className='boardBox'>
+                <button className='boardTile' onClick={() => this.redirect() }>
                     {this.tableName}
                 </button>
             </li>
@@ -31,10 +31,6 @@ function Boards(props) {
     const [showPopup, setShowPopup] = useState(false);
     const user = props.user;
 
-    // add popup stuff to this
-    const createTable = () => {
-        scrum_db.createTable(user.uid, "test_board");
-    };
 
     if (snapshot) {
         var tables = []; // empty array
@@ -47,10 +43,11 @@ function Boards(props) {
         // return a list of their boards.
         return (
             <div>
+                <div className='secondaryNav'>
+                    <button className='taskButton' onClick={() => setShowPopup(true)}>Add Board</button>
+                </div>
                 <div> 
-                    <ul className='taskList'>{tables.length ? tables.map(table => { return table.render() }) : "No Boards"} </ul>
-                    <button onClick={createTable}> hi </button>
-                    <button onClick={() => setShowPopup(true)}>Add Board</button>
+                    <ul className='boardList'>{tables.length ? tables.map(table => { return table.render() }) : "No Boards"} </ul>
                 </div>
 
                 <PopupTable onClose={() => setShowPopup(false)} show={showPopup} userid={user.uid}/>

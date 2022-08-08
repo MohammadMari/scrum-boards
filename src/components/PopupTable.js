@@ -33,8 +33,8 @@ function PopupTable(props) {
                     </form>
                 </div>
                 <div className="popup-footer">
-                    <button onClick={props.onClose} className="cancel-button">Cancel</button>
-                    <button onClick={validate_table} className="submit-button">Submit</button>
+                    <button onClick={props.onClose} className="footer-buttons">Cancel</button>
+                    <button onClick={validate_table} className="footer-buttons">Submit</button>
                 </div>
             </div>
         </div>

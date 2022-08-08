@@ -12,7 +12,7 @@
 
 .popup-window{
     width: 400px;
-    height: 350px;
+    height: 450px;
     background-color: white;
 }
 
@@ -23,8 +23,22 @@
     background-color: #5C87e6;
 }
 
-.popup-footer{
+.footer-buttons {
+    background-color: white;
+    border: none;
+    margin-left: 20px;
     padding: 10px;
+    transition-duration: 200ms;
+}
+
+
+.footer-buttons:hover {
+    background-color: lightgray;
+    transition-duration: 200ms;
+}
+
+.popup-footer{
+    padding-left: 95px;
 }
 
 .popup-body{
@@ -37,17 +51,7 @@
     margin: 0;
 }
 
-.cancel-button{
-    position: absolute;
-    top: 410px;
-    left: 660px;
-}
 
-.submit-button{
-    position: absolute;
-    top: 410px;
-    left: 550px;
-}
 
 .popup-form{
     display: table;
