@@ -58,3 +58,19 @@
 .taskParent {
     white-space: nowrap;
 }
+
+.taskBox.dragging {
+    opacity: .5;
+}
+
+.colOne {
+    padding:10000px;
+}
+
+.col2 {
+
+}
+
+.col3 {
+
+}
