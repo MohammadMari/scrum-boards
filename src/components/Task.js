@@ -4,6 +4,8 @@ import { scrum_db } from '../Database';
 import './Task.css'
 import Popup from './Popup';
 import { set, update, remove } from "firebase/database";
+import PopupTable from './PopupTable';
+import TaskInfoPopup from './TaskInfoPopup';
 
 const Column = ({taskList, name, type}) => {
     return (
@@ -11,7 +13,9 @@ const Column = ({taskList, name, type}) => {
                 <div className='taskHeader'>
                     {name}
                 </div>
-                <ul className='taskList'>{taskList.filter((v) => { return v.type == type }).map(task => {return task.render()})} </ul>
+                <ul className='taskList'>
+                    {taskList.filter((v) => { return v.type == type }).map(task => {return task.render()})} 
+                </ul>
         </div>
     );
 }
@@ -24,17 +28,20 @@ class Task {
         this.due = val.due;
         this.type = val.type;
         this.id = key;
+        this.task = val;
     }
+
 
      delete()
      {   
+            //console.log(this.id);
     //     const tableID = window.location.href.split("/").pop();
     //     remove(scrum_db.getReference("tables/" + tableID + "/" + this.id));
      }
 
     render() {
         return ( 
-            <li key={this.id} className="taskBox" draggable={true} id={this.id} onClick={() => this.delete()}>
+            <li key={this.id} className="taskBox" task={this} draggable={true} id={this.id} onClick={() => this.delete()}>
                 <button className="taskButton" onClick={this.displayInfo}>
                     {this.name}
                 </button>
@@ -52,6 +59,9 @@ function Tasks(props) {
     const [snapshot, loading, error] = useList(ref);
 
     const [showPopup, setShowPopup] = useState(false);
+    const [showInfo, setShowInfo] = useState(false);
+
+    const [popupTask, setPopupTask] = useState('');
     
     if (!snapshot) {
         return <div>error.</div>;
@@ -75,7 +85,18 @@ function Tasks(props) {
     draggables.forEach((draggable) => {
         draggable.addEventListener('dragstart', () => {
             draggable.classList.add('dragging');
-        })
+        });
+
+        draggable.addEventListener('click',() => {
+            
+            let tempTask = tasks.find(tempTask => {
+                return tempTask.id == draggable.id;
+            });
+
+
+            setPopupTask(tempTask);
+            setShowInfo(true);
+        });
     });
 
     
@@ -125,6 +146,7 @@ function Tasks(props) {
                 </div>
             </div>
                 <Popup onClose={() => setShowPopup(false)} show={showPopup} table_id={tableID}/>
+                <TaskInfoPopup onClose={() => setShowInfo(false)} show={showInfo} task={popupTask} table_id={tableID}/>
         </div>
     );
 }
