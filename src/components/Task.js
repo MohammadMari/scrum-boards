@@ -81,7 +81,7 @@ function Tasks(props) {
                         <Column taskList={tasks} type={2} name='DONE'/>
                     </div>
                 </div>
-                <Popup onClose={() => setShowPopup(false)} show={showPopup}/>
+                <Popup onClose={() => setShowPopup(false)} show={showPopup} table_id={tableID}/>
              </div>
         );
     }
