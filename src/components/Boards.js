@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { useList } from 'react-firebase-hooks/database';
 import { scrum_db } from '../Database';
 import './Boards.css'
+import PopupTable from './PopupTable';
 
 class tableTile {
     constructor(key, val) {
@@ -27,6 +28,7 @@ class tableTile {
 
 function Boards(props) {
     const [snapshot, loading, error] = useList(scrum_db.getReference('tables'));
+    const [showPopup, setShowPopup] = useState(false);
     const user = props.user;
 
     // add popup stuff to this
@@ -48,7 +50,10 @@ function Boards(props) {
                 <div> 
                     <ul className='taskList'>{tables.length ? tables.map(table => { return table.render() }) : "No Boards"} </ul>
                     <button onClick={createTable}> hi </button>
+                    <button onClick={() => setShowPopup(true)}>Add Board</button>
                 </div>
+
+                <PopupTable onClose={() => setShowPopup(false)} show={showPopup} userid={user.uid}/>
             </div>
         );
     }
