@@ -7,11 +7,11 @@ import { set, update } from "firebase/database";
 
 const Column = ({taskList, name, type}) => {
     return (
-            <div className='taskContainer'>
+            <div className='taskContainer' type={type}>
                 <div className='taskHeader'>
                     {name}
                 </div>
-                <ul className='taskList'>{taskList.filter((v) => { return v.type === type }).map(task => {return task.render()})} </ul>
+                <ul className='taskList'>{taskList.filter((v) => { return v.type == type }).map(task => {return task.render()})} </ul>
         </div>
     );
 }
@@ -111,6 +111,8 @@ function Tasks(props) {
                     if (tempTask.id == draggable.id)
                         return true;
                     });
+
+                    console.log(task);
                 
                     // e target is the box we are dragging towards.
                     if (e.target)
@@ -118,16 +120,17 @@ function Tasks(props) {
                         // so I found that the boxes are numbered using ID, so we can just take the ID...
                         // ... using e.target.id, and just change the info in the database, and that should ...
                         // .. make it draggable.
-                        const targetBox = e.target.id; 
+                        const targetBox = e.target.getAttribute('type');
                         console.log(e.target);
-                        console.log("task type: "  + task.type);
-                        console.log("target: " + targetBox); // now my issue is, sometimes targetBox is blank for whatever reason.
+                        // console.log("task type: "  + task.type);
+                        console.log("target: " + e.target.getAttribute('type')); // now my issue is, sometimes targetBox is blank for whatever reason.
                         
                         // this check is useless because if targetBox is blank, its obv not going to be equal to whatever box task is in.
-                        if (task.type != targetBox) 
+                        if (targetBox && task.type != targetBox) 
                         {
                             // this just updates the
-                            update(taskRef, {type: targetBox});
+                            task.type = targetBox;
+                            scrum_db.editTask(tableID, task);
                             console.log("updated: " + targetBox);
                         }
                     }
