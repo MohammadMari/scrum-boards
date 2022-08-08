@@ -3,7 +3,7 @@ import { useList } from 'react-firebase-hooks/database';
 import { scrum_db } from '../Database';
 import './Task.css'
 import Popup from './Popup';
-import { set, update } from "firebase/database";
+import { set, update, remove } from "firebase/database";
 
 const Column = ({taskList, name, type}) => {
     return (
@@ -26,10 +26,15 @@ class Task {
         this.id = key;
     }
 
+     delete()
+     {   
+    //     const tableID = window.location.href.split("/").pop();
+    //     remove(scrum_db.getReference("tables/" + tableID + "/" + this.id));
+     }
 
     render() {
         return ( 
-            <li key={this.id} className="taskBox" draggable={true} id={this.id}>
+            <li key={this.id} className="taskBox" draggable={true} id={this.id} onClick={() => this.delete()}>
                 <button className="taskButton" onClick={this.displayInfo}>
                     {this.name}
                 </button>
@@ -42,9 +47,8 @@ class Task {
 
 function Tasks(props) {
     const url = window.location.href;
-    const lastSegment = url.split("/").pop();
-    const tableID = lastSegment;
-    const ref = scrum_db.getReference(`tables/${lastSegment}`);
+    const tableID = url.split("/").pop();
+    const ref = scrum_db.getReference(`tables/${tableID}`);
     const [snapshot, loading, error] = useList(ref);
 
     const [showPopup, setShowPopup] = useState(false);
@@ -57,10 +61,8 @@ function Tasks(props) {
     });
     tasks = [...new Map(tasks.map((v) => [v.id, v])).values()];
 
-    window.onload = function() {
-        
-    }
 
+    // used for drag and drop
     let targetBox = 0;
     // get all the "containers" or columns that hold the task
     const containers = document.querySelectorAll(".taskContainer");
@@ -77,13 +79,15 @@ function Tasks(props) {
     });
 
     
+
     draggables.forEach((draggable) => {
         draggable.addEventListener('dragend', () => {
-            const taskRef = scrum_db.getReference("tables/" + lastSegment + "/" + draggable.id);
+
             const task = tasks.find(tempTask => {
                 return tempTask.id == draggable.id;
             });
 
+            // if it was a task that was dropped, 
             if (task)
             {
                 if (targetBox && task.type != targetBox) 

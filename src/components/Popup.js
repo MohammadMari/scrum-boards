@@ -47,9 +47,9 @@ function Popup(props) {
                         <label>
                             Task Type:
                             <select value={task_type} className="popup-input" onChange={(e) => setTaskType(e.target.value)}>
-                                <option value={1}>TODO</option>
-                                <option value={2}>WIP</option>
-                                <option value={3}>DONE</option>
+                                <option value={0}>TODO</option>
+                                <option value={1}>WIP</option>
+                                <option value={2}>DONE</option>
                             </select>
                         </label>
 
