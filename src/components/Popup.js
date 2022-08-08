@@ -42,13 +42,22 @@ function Popup(props) {
                         <input className="popup-input" type="date" id="dueDate" onChange={(e) => setTaskDue(e.target.value)}></input>
                         <br />
                         <label for="Notes">Task Notes: </label>
-                        <input className="popup-input" type="text" id="Notes" onChange={(e) => setTaskDescription(e.target.value)}/>
+                        <input className="popup-input" type="text" id="Notes" onChange={(e) => setTaskDescription(e.target.value)} />
+                        <br />
+                        <label>
+                            Task Type:
+                            <select value={task_type} className="popup-input" onChange={(e) => setTaskType(e.target.value)}>
+                                <option value={1}>TODO</option>
+                                <option value={2}>WIP</option>
+                                <option value={3}>DONE</option>
+                            </select>
+                        </label>
 
                     </form>
                 </div>
                 <div className="popup-footer">
-                    <button onClick={props.onClose} className="cancel-button">cancel</button>
-                    <button onClick={ validate_task } className="submit-button">submit</button>
+                    <button onClick={props.onClose} className="cancel-button">Cancel</button>
+                    <button onClick={validate_task} className="submit-button">Submit</button>
                 </div>
             </div>
         </div>
