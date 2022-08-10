@@ -31,7 +31,26 @@
     border-radius: 5px;
 }
 
+.taskDiv {
+    background-color: #7e91a2;
+    opacity: 1;
+    color: white;
+    border-style: none;
+    padding: 20px;
+    width: 100%;
+    height: 50%;
+    transition-duration: 200ms;
+    border-radius: 5px;
+}
+
 .taskButton:hover {
+    background-color: lightblue;
+    opacity: 1;
+    transition-duration: 200ms;
+    color:black;
+}
+
+.taskDiv:hover {
     background-color: lightblue;
     opacity: 1;
     transition-duration: 200ms;
@@ -40,6 +59,7 @@
 
 
 .taskList {
+    height: 100%;
     padding: 5px;
     padding-top: 0px;
 }

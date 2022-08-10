@@ -45,6 +45,7 @@ function TaskInfoPopup (props) {
                 </div>
                 <div className="popup-footer">
                     <button onClick={delTask} className="footer-buttons">Delete</button>
+                    <button onClick={props.onClose} className="footer-buttons">Close</button>
                 </div>
             </div>
         </div>

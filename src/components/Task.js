@@ -6,18 +6,51 @@ import Popup from './Popup';
 import { set, update, remove } from "firebase/database";
 import PopupTable from './PopupTable';
 import TaskInfoPopup from './TaskInfoPopup';
+import { Draggable, Droppable, DragDropContext } from 'react-beautiful-dnd';
 
-const Column = ({taskList, name, type}) => {
+function Column(props) {
     return (
-            <div className='taskContainer' type={type}>
-                <div className='taskHeader'>
-                    {name}
-                </div>
-                <ul className='taskList'>
-                    {taskList.filter((v) => { return v.type == type }).map(task => {return task.render()})} 
-                </ul>
+        <div className='taskContainer' type={props.columnId}>
+            <div className='taskHeader'>
+                {props.name}
+            </div>
+            <Droppable droppableId={props.columnId.toString()} key={props.columnId}>
+                {(provided) => (
+
+                    <div className='taskList'
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}>
+
+                        {props.taskList.filter((v) => { return v.type == props.columnId }).map((task, index) => {
+                            return (
+                                <Draggable key={task.id} draggableId={task.id} index={index} disableInteractiveElementBlocking={true}>
+                                    {(provided) => (
+
+                                        <div key={task.id} className="taskBox" id={task.id}
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}>
+
+
+                                            <button className="taskButton" onClick={() => {props.setPopupTask(task); props.setShowInfo(true)}}>
+                                                {task.name}
+                                            </button>
+
+
+                                        </div>
+
+                                    )}
+
+                                </Draggable>
+                            )
+                        })}
+                        {provided.placeholder}
+                    </div>
+                )}
+
+            </Droppable>
         </div>
-    );
+    )
 }
 
 
@@ -29,24 +62,8 @@ class Task {
         this.type = val.type;
         this.id = key;
         this.task = val;
-    }
 
 
-     delete()
-     {   
-            //console.log(this.id);
-    //     const tableID = window.location.href.split("/").pop();
-    //     remove(scrum_db.getReference("tables/" + tableID + "/" + this.id));
-     }
-
-    render() {
-        return ( 
-            <li key={this.id} className="taskBox" task={this} draggable={true} id={this.id} onClick={() => this.delete()}>
-                <button className="taskButton" onClick={this.displayInfo}>
-                    {this.name}
-                </button>
-            </li>
-        );
     }
 }
 
@@ -62,7 +79,7 @@ function Tasks(props) {
     const [showInfo, setShowInfo] = useState(false);
 
     const [popupTask, setPopupTask] = useState('');
-    
+
     if (!snapshot) {
         return <div>error.</div>;
     }
@@ -71,7 +88,7 @@ function Tasks(props) {
     });
     tasks = [...new Map(tasks.map((v) => [v.id, v])).values()];
 
-
+    /*
     // used for drag and drop
     let targetBox = 0;
     // get all the "containers" or columns that hold the task
@@ -130,6 +147,26 @@ function Tasks(props) {
             targetBox = e.target.getAttribute('type');
         });
     });
+    */
+
+    const onDragEnd = (results) => {
+        if (!results.destination) return;
+        const { source, destination } = results;
+
+        console.log(results);
+
+        if(source.droppableId !== destination.droppableId) {
+           const taskDragged = tasks.find(v => {
+                return results.draggableId == v.id;
+           });
+
+           console.log(taskDragged);
+
+           taskDragged.type = destination.droppableId;
+           scrum_db.editTask(tableID, taskDragged);
+        }
+    };
+
 
 
     return (
@@ -139,16 +176,25 @@ function Tasks(props) {
             </div>
             <div>
 
-                    <div className='taskParent'>
-                        <Column taskList={tasks} type={0} name='TODO'/>
-                        <Column taskList={tasks} type={1} name='WIP'/>
-                        <Column taskList={tasks} type={2} name='DONE'/>
+
+                <div className='taskParent'>
+                    <DragDropContext onDragEnd={onDragEnd}>
+
+                        <Column taskList={tasks} columnId={0} name='TODO' setShowInfo={setShowInfo} setPopupTask={setPopupTask}/>
+
+                        <Column taskList={tasks} columnId={1} name='WIP' setShowInfo={setShowInfo} setPopupTask={setPopupTask}/>
+
+                        <Column taskList={tasks} columnId={2} name='DONE' setShowInfo={setShowInfo} setPopupTask={setPopupTask}/>
+
+                    </DragDropContext>
                 </div>
+
+
             </div>
-                <Popup onClose={() => setShowPopup(false)} show={showPopup} table_id={tableID}/>
-                <TaskInfoPopup onClose={() => setShowInfo(false)} show={showInfo} task={popupTask} table_id={tableID}/>
+            <Popup onClose={() => setShowPopup(false)} show={showPopup} table_id={tableID} />
+            <TaskInfoPopup onClose={() => setShowInfo(false)} show={showInfo} task={popupTask} table_id={tableID} />
         </div>
-    );
+    )
 }
 
 export default Tasks;
