@@ -27,7 +27,6 @@ function Nav () {
                 <img className='navbarLogo' src='/scrum_logo.png'/>
                 <div className='navbarLeft'>
                     <div className='navButton' onClick={() => boardNav() }> Boards </div>
-                    <div className='navButton' onClick={() => tasksNav() }> Tasks </div>
                 </div> 
                 <div className='navbarRight'>
                     <div className='navButton' onClick={() => logoutNav() }> Logout </div>

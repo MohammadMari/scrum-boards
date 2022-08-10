@@ -19,8 +19,14 @@ function Registration() {
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     const [passwordCheck, setPassswordCheck] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    function boardNav() {
+        window.location.href = "/";
+    }
 
     const handleSubmit = (e, p1, p2) => {
+        setErrorMessage('');
         if (p1 == p2)
             createUserWithEmailAndPassword(e, p1);
     };
@@ -56,12 +62,8 @@ function Registration() {
         );
     } else if (userReg) {
         scrum_db.createUser(firstName, lastName, email, userReg.user.uid);
-        scrum_db.createBoard(userReg.user.uid, "test_board");
-        return (
-            <div>
-                <p>Registered user: {userReg.user.email}</p>
-                <br />
-            </div>);
+        //scrum_db.createBoard(userReg.user.uid, "test_board");
+        boardNav();
     } else {
         if (loadingReg) {
             return (
@@ -70,50 +72,47 @@ function Registration() {
                     <br />
                 </div>
             );
-        } else if (errorReg) {
-            return (
-                <div>
-                    <p>Error: {errorReg.message}</p>
-                    <br />
-                </div>
-            );
-        } else {
-            return (
-                <div className='registerMain'>
-                    <form className='registerForm'>
-                        <div className='registerHeader'>
-                            Registration
-                        </div>
+        } else if (errorReg && !errorMessage.length) {
+            console.log('error in register');
+            setErrorMessage(errorReg.message);
+        } 
 
-                        <div className='input'>
-                            <input type='text' name='firstName' placeholder='First Name' onChange={(e) => setFirstName(e.target.value)}></input>
-                        </div>
+        return (
+            <div className='registerMain'>
+                <form className='registerForm'>
+                    <div className='registerHeader'>
+                        Registration
+                    </div>
 
-                        <div className='input'>
-                            <input type='text' name='lastName' placeholder='Last Name' onChange={(e) => setLastName(e.target.value)}></input>
-                        </div>
+                    <div className='input'>
+                        <input type='text' name='firstName' placeholder='First Name' onChange={(e) => setFirstName(e.target.value)}></input>
+                    </div>
 
-                        <div className='input'>
-                            <input type='text' name='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
-                        </div>
+                    <div className='input'>
+                        <input type='text' name='lastName' placeholder='Last Name' onChange={(e) => setLastName(e.target.value)}></input>
+                    </div>
 
-                        <div className='input'>
-                            <input type='password' name='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}></input>
-                        </div>
+                    <div className='input'>
+                        <input type='text' name='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}></input>
+                    </div>
 
-                        <div className='input'>
-                            <input type='password' name='passwordVerify' placeholder='Re-Enter Password' onChange={(e) => { setPassword2(e.target.value); passwordVerify(password, e.target.value); }}></input>
-                            <p>{passwordCheck}</p>
-                            <br />
-                        </div>
+                    <div className='input'>
+                        <input type='password' name='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)}></input>
+                    </div>
 
-                        <button className='registerButton' type='button' onClick={() => { handleSubmit(email, password, password2) }}>
-                            Register
-                        </button>
-                    </form>
-                </div>
-            );
-        }
+                    <div className='input'>
+                        <input type='password' name='passwordVerify' placeholder='Re-Enter Password' onChange={(e) => { setPassword2(e.target.value); passwordVerify(password, e.target.value); }}></input>
+                        <p>{passwordCheck}</p>
+                        <br />
+                    </div>
+                    <div className='error'> {errorMessage}</div>
+                    <button className='registerButton' type='button' onClick={() => { handleSubmit(email, password, password2) }}>
+                        Register
+                    </button>
+                </form>
+            </div>
+        );
+
     }
 }
 
